@@ -1,121 +1,98 @@
-// script.js
 document.addEventListener('DOMContentLoaded', () => {
-    const startBtn = document.getElementById('start-btn');
-    const gameScreen = document.getElementById('game-screen');
+    console.log('Script carregado');
+
     const startScreen = document.getElementById('start-screen');
+    const gameScreen = document.getElementById('game-screen');
     const endScreen = document.getElementById('end-screen');
     const storyText = document.getElementById('story-text');
     const choicesContainer = document.getElementById('choices-container');
+    const startBtn = document.getElementById('start-btn');
     const restartBtn = document.getElementById('restart-btn');
 
     const story = [
         {
-            text: "Você recebeu uma proposta para construir um novo parque na cidade. Isso poderia melhorar a qualidade de vida, mas também envolveria a remoção de algumas árvores. Qual é a sua decisão?",
+            text: "Você é o novo líder de uma cidade chamada EcoVille. A cidade enfrenta uma crise ambiental grave. Como você quer começar a resolver essa crise?",
             choices: [
-                { text: "Aceitar a proposta e construir o parque.", nextStep: 1 },
-                { text: "Recusar a proposta e preservar as árvores.", nextStep: 2 },
-                { text: "Ignorar a proposta e não tomar uma decisão.", nextStep: 3 }
+                { text: "Expandir o programa de reciclagem e exigir mais das empresas.", nextStep: 1 },
+                { text: "Introduzir novas tecnologias de limpeza e controle de poluição.", nextStep: 2 },
+                { text: "Focar em iniciativas comunitárias e envolver mais a população no processo de limpeza e conservação.", nextStep: 3 }
             ]
         },
         {
-            text: "Você aceitou a proposta. O parque foi construído, mas alguns moradores estão descontentes com a perda das árvores. O que você faz?",
+            text: "Você decidiu expandir o programa de reciclagem. A cidade está agora mais limpa, mas os custos aumentaram. Qual é o próximo passo?",
             choices: [
-                { text: "Investir em um projeto de reflorestamento.", nextStep: 4 },
-                { text: "Manter a situação como está e não fazer mais mudanças.", nextStep: 5 },
-                { text: "Desistir do projeto e reverter as mudanças.", nextStep: 6 }
+                { text: "Reduzir o orçamento de outras áreas para cobrir os custos.", nextStep: 4 },
+                { text: "Buscar novas fontes de financiamento e parcerias.", nextStep: 5 },
+                { text: "Aumentar impostos para suportar o programa de reciclagem.", nextStep: 6 }
             ]
         },
         {
-            text: "Você recusou a proposta e preservou as árvores. No entanto, a cidade continua sem um espaço de lazer para a comunidade. O que você faz?",
+            text: "Você decidiu introduzir novas tecnologias. As tecnologias são eficazes, mas a cidade enfrenta resistência devido ao custo. Como você lida com isso?",
             choices: [
-                { text: "Propor um novo plano para criar um espaço de lazer sem prejudicar o meio ambiente.", nextStep: 7 },
-                { text: "Manter a situação atual e não fazer mais mudanças.", nextStep: 8 },
-                { text: "Revisar a proposta e considerar outras opções.", nextStep: 9 }
+                { text: "Implementar um programa de conscientização para educar a população sobre os benefícios.", nextStep: 7 },
+                { text: "Procurar apoio financeiro de investidores e do governo.", nextStep: 8 },
+                { text: "Reduzir o escopo das tecnologias para reduzir custos.", nextStep: 9 }
             ]
         },
         {
-            text: "Você ignorou a proposta. A cidade continua sem um novo parque e alguns moradores estão descontentes. O que você faz?",
+            text: "Você decidiu focar em iniciativas comunitárias. A participação da comunidade aumentou, mas a coordenação entre grupos é um desafio. Qual é o próximo passo?",
             choices: [
-                { text: "Organizar uma reunião para discutir a situação com a comunidade.", nextStep: 10 },
-                { text: "Continuar sem tomar mais ações.", nextStep: 11 },
-                { text: "Rever a proposta e considerar a construção do parque novamente.", nextStep: 12 }
+                { text: "Estabelecer uma coordenação centralizada para gerenciar as iniciativas.", nextStep: 10 },
+                { text: "Aumentar o financiamento para os grupos comunitários.", nextStep: 11 },
+                { text: "Redefinir as metas e prioridades das iniciativas comunitárias.", nextStep: 12 }
             ]
         },
-        // Etapas finais
         {
-            text: "Você optou por investir em um projeto de reflorestamento. A cidade agora tem um belo parque e a satisfação da comunidade melhorou.",
-            choices: [],
-            isEnd: true
-        },
-        {
-            text: "Você decidiu manter a situação como está. A comunidade continua dividida, mas a cidade tem um novo parque.",
-            choices: [],
-            isEnd: true
-        },
-        {
-            text: "Você reverteu o projeto e as árvores foram replantadas. A cidade está de volta ao estado original e as pessoas estão felizes.",
-            choices: [],
-            isEnd: true
-        },
-        {
-            text: "Você propôs um novo plano de lazer sustentável. A comunidade está satisfeita com a solução que preserva o meio ambiente.",
-            choices: [],
-            isEnd: true
-        },
-        {
-            text: "Você optou por não fazer mais mudanças. A cidade continua sem um espaço de lazer novo.",
-            choices: [],
-            isEnd: true
-        },
-        {
-            text: "Você decidiu rever a proposta e considerar novas opções. A cidade está agora debatendo um plano mais equilibrado.",
-            choices: [],
-            isEnd: true
-        },
-        {
-            text: "Você organizou uma reunião com a comunidade. Novas propostas estão sendo discutidas para melhorar a situação.",
-            choices: [],
-            isEnd: true
-        },
-        {
-            text: "Você continuou sem tomar mais ações. A cidade continua como estava e alguns moradores ainda estão insatisfeitos.",
-            choices: [],
-            isEnd: true
-        },
-        {
-            text: "Você revisou a proposta e decidiu construir o parque. A cidade agora tem um novo espaço de lazer e está dividida sobre a decisão.",
-            choices: [],
+            text: "Obrigado por jogar! Volte sempre para tomar mais decisões.",
             isEnd: true
         }
     ];
 
-    function showStep(stepIndex) {
-        const step = story[stepIndex];
-        storyText.textContent = step.text;
+    let currentStep = 0;
+
+    function startGame() {
+        console.log('Iniciando o jogo');
+        startScreen.style.display = 'none';
+        gameScreen.style.display = 'block';
+        showStep(currentStep);
+    }
+
+    function showStep(step) {
+        console.log(`Mostrando passo: ${step}`);
+        const currentStory = story[step];
+        storyText.textContent = currentStory.text;
         choicesContainer.innerHTML = '';
-
-        step.choices.forEach((choice) => {
-            const button = document.createElement('button');
-            button.textContent = choice.text;
-            button.addEventListener('click', () => showStep(choice.nextStep));
-            choicesContainer.appendChild(button);
-        });
-
-        if (step.isEnd) {
-            gameScreen.style.display = 'none';
-            endScreen.style.display = 'block';
+        if (currentStory.choices) {
+            currentStory.choices.forEach((choice) => {
+                const button = document.createElement('button');
+                button.textContent = choice.text;
+                button.addEventListener('click', () => handleChoice(choice.nextStep));
+                choicesContainer.appendChild(button);
+            });
         }
     }
 
-    function startGame() {
-        startScreen.style.display = 'none';
-        gameScreen.style.display = 'block';
-        showStep(0);
+    function handleChoice(nextStep) {
+        console.log(`Escolha feita, indo para o passo: ${nextStep}`);
+        if (nextStep >= story.length || story[nextStep].isEnd) {
+            showEndScreen();
+        } else {
+            currentStep = nextStep;
+            showStep(currentStep);
+        }
+    }
+
+    function showEndScreen() {
+        console.log('Mostrando tela de finalização');
+        gameScreen.style.display = 'none';
+        endScreen.style.display = 'block';
     }
 
     function restartGame() {
+        console.log('Reiniciando o jogo');
         endScreen.style.display = 'none';
         startScreen.style.display = 'block';
+        currentStep = 0;
     }
 
     startBtn.addEventListener('click', startGame);

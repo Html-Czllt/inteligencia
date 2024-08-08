@@ -7,26 +7,86 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f0f0f0;
+    background: linear-gradient(135deg, #87CEFA, #4682B4); /* Gradiente azul claro para fundo */
+    color: #333;
 }
 
 #game-container {
     text-align: center;
     width: 80%;
-    max-width: 600px;
-}
-
-#start-screen, #game-screen, #end-screen {
-    margin-top: 20px;
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.95); /* Fundo branco semi-transparente com menos opacidade */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3); /* Sombra mais pronunciada */
 }
 
 button {
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 16px;
+    background-color: #007BFF; /* Azul primário */
+    border: none;
+    color: white;
+    padding: 12px 24px; /* Aumento no padding para maior conforto */
+    font-size: 18px; /* Tamanho de fonte aumentado */
     cursor: pointer;
+    border-radius: 8px; /* Bordas arredondadas mais suaves */
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+    margin-bottom: 15px; /* Espaçamento entre os botões */
 }
 
-#choices-container button {
-    margin: 5px;
+button:hover {
+    background-color: #0056b3; /* Azul escuro */
+    transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3); /* Adiciona sombra ao botão ao passar o mouse */
+}
+
+button:focus {
+    outline: none; /* Remove a borda de foco padrão */
+}
+
+#story-container {
+    background: #f9f9f9; /* Fundo branco muito claro para contraste suave */
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Sombra mais suave */
+    margin: auto;
+    max-width: 600px;
+    display: inline-block;
+}
+
+#story-text {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #333;
+}
+
+#choices-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espaçamento entre os botões */
+}
+
+#end-screen {
+    text-align: center;
+}
+
+#end-text {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #007BFF; /* Azul primário para o texto de finalização */
+}
+
+#restart-btn {
+    background-color: #FF6F00; /* Laranja para o botão de reinício */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    border-radius: 8px;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+#restart-btn:hover {
+    background-color: #FF8F00; /* Laranja mais claro para o hover */
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao botão ao passar o mouse */
 }
