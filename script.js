@@ -6,22 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const usernameInput = loginForm.querySelector('.username');
     const passwordInput = loginForm.querySelector('.password');
     const loginBtn = document.getElementById('login-btn');
-    
-    // Atualiza a posição da íris dos olhos
-    function updateEyeballPosition(value) {
-        if (typeof value !== 'number') {
-            const offset = usernameInput.value.length * (100 / usernameInput.maxLength);
-            value = Math.max(Math.min(offset, 90), 10);
-        }
-        characterEyes.style.setProperty('--eye-ball-offset', `${value}%`);
-    }
-
-    usernameInput.addEventListener('keyup', () => updateEyeballPosition());
-    usernameInput.addEventListener('focus', () => updateEyeballPosition());
-    usernameInput.addEventListener('blur', () => updateEyeballPosition(50));
-
-    passwordInput.addEventListener('focus', () => characterEyes.classList.add('closed'));
-    passwordInput.addEventListener('blur', () => characterEyes.classList.remove('closed'));
 
     // Função para iniciar o jogo
     function login() {
@@ -125,4 +109,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startBtn.addEventListener('click', startGame);
     restartBtn.addEventListener('click', restartGame);
+
+    // Função para fazer os olhos seguirem o cursor do mouse
+    function eyeball(event) {
+        const eyes = document.querySelectorAll('.eye');
+        eyes.forEach(function(eye) {
+            const rect = eye.getBoundingClientRect();
+            const eyeX = rect.left + rect.width / 2;
+            const eyeY = rect.top + rect.height / 2;
+            const deltaX = event.clientX - eyeX;
+            const deltaY = event.clientY - eyeY;
+            const angle = Math.atan2(deltaY, deltaX);
+            const rotation = (angle * (180 / Math.PI)) - 90; // Ajusta a rotação para corrigir a inversão
+            eye.style.transform = `rotate(${rotation}deg)`;
+        });
+    }
+
+    document.addEventListener('mousemove', eyeball);
 });
