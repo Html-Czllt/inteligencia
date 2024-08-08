@@ -1,4 +1,4 @@
-/* style.css */
+/* Estilos para o site */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -89,4 +89,110 @@ button:focus {
 #restart-btn:hover {
     background-color: #FF8F00; /* Laranja mais claro para o hover */
     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2); /* Adiciona sombra ao botão ao passar o mouse */
+}
+
+/* Estilos para o formulário de login */
+#login-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: #fff;
+    text-align: center;
+}
+
+#login-form {
+    --size: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10%;
+    width: var(--size);
+    min-height: var(--size);
+    border-radius: 10%;
+    background-color: #ffffff; /* Cor do fundo adaptada ao tema */
+}
+
+#login-form input {
+    padding: 0.25em;
+    border-radius: 0.5em;
+    border: 1px solid #007BFF; /* Cor dos inputs */
+}
+
+.character {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    width: calc(var(--size) / 3);
+    height: calc(var(--size) / 3);
+    border-radius: 40% 40% 0 0;
+    background-color: #87CEFA; /* Cor do corpo adaptada ao tema */
+}
+
+.character .eyes {
+    --eye-ball-offset: 50%;
+    --eye-ball-size: 35%;
+    display: flex;
+    justify-content: space-evenly;
+    width: 80%;
+}
+
+.character .eyes .eye {
+    position: relative;
+    transition: height 0.2s ease-in;
+    overflow: hidden;
+    width: 35%;
+    border-radius: 50%;
+    background-color: #4682B4; /* Cor dos olhos adaptada ao tema */
+}
+
+.character .eyes .eye::before {
+    content: '';
+    display: block;
+    transition: padding-top 0.2s ease-in;
+    padding-top: 100%;
+}
+
+.character .eyes.closed .eye::before {
+    padding-top: 2px;
+}
+
+.character .eyes .eye::after {
+    content: '';
+    position: absolute;
+    bottom: 5%;
+    left: var(--eye-ball-offset);
+    transform: translateX(-50%);
+    transition: all 0.2s ease-in;
+    width: var(--eye-ball-size);
+    height: var(--eye-ball-size);
+    border-radius: 50%;
+    background-color: #ffffff; /* Cor da íris adaptada ao tema */
+}
+
+.character .eyes.closed .eye::after {
+    height: 0;
+}
+
+/* Media queries */
+@media (max-width: 600px) {
+    #game-container {
+        width: 90%;
+    }
+
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+    }
+
+    #story-text {
+        font-size: 16px;
+    }
+
+    #login-form {
+        width: 80%;
+    }
 }

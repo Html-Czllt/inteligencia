@@ -1,6 +1,38 @@
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('Script carregado');
+    const loginScreen = document.getElementById('login-screen');
+    const gameContainer = document.getElementById('game-container');
+    const loginForm = document.querySelector('#login-form');
+    const characterEyes = loginForm.querySelector('.eyes');
+    const usernameInput = loginForm.querySelector('.username');
+    const passwordInput = loginForm.querySelector('.password');
+    const loginBtn = document.getElementById('login-btn');
+    
+    // Atualiza a posição da íris dos olhos
+    function updateEyeballPosition(value) {
+        if (typeof value !== 'number') {
+            const offset = usernameInput.value.length * (100 / usernameInput.maxLength);
+            value = Math.max(Math.min(offset, 90), 10);
+        }
+        characterEyes.style.setProperty('--eye-ball-offset', `${value}%`);
+    }
 
+    usernameInput.addEventListener('keyup', () => updateEyeballPosition());
+    usernameInput.addEventListener('focus', () => updateEyeballPosition());
+    usernameInput.addEventListener('blur', () => updateEyeballPosition(50));
+
+    passwordInput.addEventListener('focus', () => characterEyes.classList.add('closed'));
+    passwordInput.addEventListener('blur', () => characterEyes.classList.remove('closed'));
+
+    // Função para iniciar o jogo
+    function login() {
+        loginScreen.style.display = 'none';
+        gameContainer.style.display = 'block';
+        // Inicie o jogo ou redirecione para a tela do jogo
+    }
+
+    loginBtn.addEventListener('click', login);
+
+    // Código do jogo interativo
     const startScreen = document.getElementById('start-screen');
     const gameScreen = document.getElementById('game-screen');
     const endScreen = document.getElementById('end-screen');
@@ -51,14 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentStep = 0;
 
     function startGame() {
-        console.log('Iniciando o jogo');
         startScreen.style.display = 'none';
         gameScreen.style.display = 'block';
         showStep(currentStep);
     }
 
     function showStep(step) {
-        console.log(`Mostrando passo: ${step}`);
         const currentStory = story[step];
         storyText.textContent = currentStory.text;
         choicesContainer.innerHTML = '';
@@ -73,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function handleChoice(nextStep) {
-        console.log(`Escolha feita, indo para o passo: ${nextStep}`);
         if (nextStep >= story.length || story[nextStep].isEnd) {
             showEndScreen();
         } else {
@@ -83,16 +112,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function showEndScreen() {
-        console.log('Mostrando tela de finalização');
         gameScreen.style.display = 'none';
         endScreen.style.display = 'block';
     }
 
     function restartGame() {
-        console.log('Reiniciando o jogo');
         endScreen.style.display = 'none';
-        startScreen.style.display = 'block';
-        currentStep = 0;
+        gameContainer.style.display = 'none'; // Oculta a tela do jogo
+        loginScreen.style.display = 'flex'; // Exibe a tela de login
+        currentStep = 0; // Reinicia o passo do jogo
     }
 
     startBtn.addEventListener('click', startGame);
